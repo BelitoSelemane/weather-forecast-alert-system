@@ -12,7 +12,8 @@ function FavoriteCities() {
 
     async function fetchCities() {
         try {
-            const response = await axios.get('http://localhost:5000/api/cities')
+            const response = await axios.get('https://weather-forecast-backend-y8sr.onrender.com/api/cities')
+            
             setCities(response.data)
             setLoading(false)
         } catch (err) {
