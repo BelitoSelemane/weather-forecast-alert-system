@@ -16,8 +16,9 @@ function SearchBar({ onSearch }) {
         placeholder="Name of city..."
         value={city}
         onChange={(e) => setCity(e.target.value)}
+        aria-label="City name"
       />
-      <button type="submit">Search</button>
+      <button type="submit" aria-label="Search weather">Search</button>
     </form>
   )
 }

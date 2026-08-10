@@ -9,7 +9,7 @@ function App() {
       <div className="app">
         <header className="app-header">
           <h1>🌦️ Weather Forecast & Alert System</h1>
-          <nav>
+          <nav nav aria-label="Main navigation">
             <Link to="/">Home</Link>
             {' | '}
             <Link to="/about">About</Link>

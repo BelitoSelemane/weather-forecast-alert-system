@@ -7,6 +7,7 @@ const schema = require('./graphql/schema');
 const root = require('./graphql/resolvers');
 const http = require('http');
 const { Server } = require('socket.io');
+const { addToQueue } = require('./config/queue');
 
 const citiesRoutes = require('./routes/cities');
 const authRoutes = require('./routes/auth');
@@ -54,6 +55,7 @@ setInterval(() => {
         'Heatwave alert in Tokyo'
     ];
     const randomAlert = alerts[Math.floor(Math.random() * alerts.length)];
+    addToQueue({ type: 'weatherAlert', message: randomAlert });
     io.emit('weatherAlert', { message: randomAlert, time: new Date().toISOString() });
 }, 15000);
 
