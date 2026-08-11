@@ -16,10 +16,15 @@ exports.getCityById = (req, res) => {
 
 exports.createCity = (req, res) => {
     const { name } = req.body;
-    if (!name) return res.status(400).json({ error: 'City name is required' });
+
+    if (!name || typeof name !== 'string' || name.trim().length === 0 || name.length > 100) {
+        return res.status(400).json({ error: 'Invalid city name' });
+    }
+
+    const sanitizedName = name.trim().replace(/[<>]/g, '');
 
     const id = Date.now();
-    const newCity = { id, name, addedBy: req.user.username };
+    const newCity = { id, name: sanitizedName, addedBy: req.user.username };
     favoriteCities.set(id, newCity);
     res.status(201).json(newCity);
 };

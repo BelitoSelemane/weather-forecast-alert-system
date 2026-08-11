@@ -8,6 +8,8 @@ const root = require('./graphql/resolvers');
 const http = require('http');
 const { Server } = require('socket.io');
 const { addToQueue } = require('./config/queue');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 const citiesRoutes = require('./routes/cities');
 const authRoutes = require('./routes/auth');
@@ -25,6 +27,14 @@ const logger = require('./middleware/logger');
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(helmet());
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    message: { error: 'Too many requests, please try again later.' }
+});
+app.use(limiter);
 app.use(logger);
 app.use(passport.initialize());
 
